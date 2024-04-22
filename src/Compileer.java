@@ -1,4 +1,4 @@
-public class Compiler {
+public class Compileer {
     private final static String R_TYPE_REGEX_ZERO = "or|and|nand|xor|add|sub|sge|sgeu";
     private final static String R_TYPE_REGEX_ONE = "sll|srl|sra|ror|movz|movn|jr|jalr";
     private final static String I_TYPE_REGEX = "andi|ori|addi|sw|lw|bne|beq|bgt|bge|blt|ble";
