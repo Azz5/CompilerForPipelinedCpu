@@ -28,30 +28,30 @@ public class main {
 
             if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{3})$")){
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
-            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-f]{2})$")) {
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{2})$")) {
                 output += "0";
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
-            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-f]{1})$")) {
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{1})$")) {
                 output += "00";
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
             }
 
             if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{3})$")){
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
-            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-f]{2})$")) {
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{2})$")) {
                 output += "0";
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
-            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-f]{1})$")) {
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{1})$")) {
                 output += "00";
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
             }
 
             if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{3})$")){
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
-            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-f]{2})$")) {
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{2})$")) {
                 output += "0";
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
-            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-f]{1})$")) {
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{1})$")) {
                 output += "00";
                 output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
             }
