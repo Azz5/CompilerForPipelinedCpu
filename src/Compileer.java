@@ -3,15 +3,18 @@ public class Compileer {
     private final static String R_TYPE_REGEX_ONE = "sll|srl|sra|ror|movz|movn|jr|jalr";
     private final static String I_TYPE_REGEX = "andi|ori|addi|sw|lw|bne|beq|bgt|bge|blt|ble";
     private final static String J_TYPE_REGEX = "lui|j|jal";
-
+    
     public static String parse(String input){
         String instruction = "";
         String[] instructionSpliced = input.split(" ");
         String output = "";
         if (instructionSpliced[0].matches(R_TYPE_REGEX_ZERO)){
             output += "0000";
-
-            output = threeReg(instructionSpliced,output);
+            boolean fliped = false;
+            if (instructionSpliced[0].matches("slt || sltu")){
+                fliped = true;
+            }
+            output = threeReg(instructionSpliced,output,fliped);
 
             switch (instructionSpliced[0]) {
                 case "or" -> output += "000";
@@ -21,7 +24,9 @@ public class Compileer {
                 case "add" -> output += "100";
                 case "sub" -> output += "101";
                 case "sge" -> output += "110";
+                case "slt" -> output += "110";
                 case "sgeu" -> output += "111";
+                case "sltu" -> output += "111";
             }
 
             instruction = Integer.toHexString(Integer.parseInt(output,2));
@@ -35,7 +40,7 @@ public class Compileer {
         } else if (instructionSpliced[0].matches(R_TYPE_REGEX_ONE)) {
             output += "0001";
 
-            output = threeReg(instructionSpliced,output);
+            output = threeReg(instructionSpliced,output,false);
 
             switch (instructionSpliced[0]) {
                 case "sll" -> output += "000";
@@ -100,35 +105,67 @@ public class Compileer {
         return instruction;
     }
 
-    private static String threeReg(String[] instructionSpliced,String output) {
-        if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{3})$")){
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
-        } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{2})$")) {
-            output += "0";
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
-        } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{1})$")) {
-            output += "00";
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
-        }
+    private static String threeReg(String[] instructionSpliced, String output, boolean fliped) {
+        if (!fliped) {
+            if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{3})$")) {
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{2})$")) {
+                output += "0";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{1})$")) {
+                output += "00";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
+            }
 
-        if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{3})$")){
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
-        } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{2})$")) {
-            output += "0";
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
-        } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{1})$")) {
-            output += "00";
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
-        }
+            if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{3})$")) {
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{2})$")) {
+                output += "0";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{1})$")) {
+                output += "00";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
+            }
 
-        if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{3})$")){
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
-        } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{2})$")) {
-            output += "0";
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
-        } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{1})$")) {
-            output += "00";
-            output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{3})$")) {
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{2})$")) {
+                output += "0";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{1})$")) {
+                output += "00";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            }
+        } else {
+            if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{3})$")) {
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{2})$")) {
+                output += "0";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[1])).matches("^([0-1]{1})$")) {
+                output += "00";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[1]));
+            }
+
+            if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{3})$")) {
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{2})$")) {
+                output += "0";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[3])).matches("^([0-1]{1})$")) {
+                output += "00";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[3]));
+            }
+
+            if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{3})$")) {
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{2})$")) {
+                output += "0";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
+            } else if (Integer.toBinaryString(Integer.parseInt(instructionSpliced[2])).matches("^([0-1]{1})$")) {
+                output += "00";
+                output += Integer.toBinaryString(Integer.parseInt(instructionSpliced[2]));
+            }
         }
         return output;
     }
