@@ -5,8 +5,6 @@ public class Main {
 
     public static void main(String[] args) {
         final Compileer compileer = new Compileer();
-
-        String Name = "C:\\Users\\s202159170\\Desktop\\projects\\compiler\\CompilerForPipelinedCpu\\src\\code.txt";
         if (args.length != 0){
             Scanner fileReader = null;
             try {
